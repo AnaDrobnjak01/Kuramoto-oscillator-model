@@ -32,6 +32,7 @@ ax.set_ylabel('Y')
 #prazna linija
 oscillators, = ax.plot([], [], 'bo')
 
+
 def init():
     oscillators.set_data([], [])
     return oscillators,
@@ -67,6 +68,8 @@ def updateN(val):
     theta = np.random.uniform(0, 2*np.pi, N)
     omega = np.repeat(sliderOmega.val, N)
 
+#check ???
+oscilators = init()
 ani = animation.FuncAnimation(fig, update, frames=int(timesteps/h), init_func=init, blit=True, interval=50)
 
 #treba podesiti ovo da vizuelno izgleda pristojno sad samo dodajem da radi 
