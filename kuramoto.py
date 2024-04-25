@@ -24,14 +24,13 @@ theta = np.random.uniform(0, 2*np.pi, N)
 # omega_value = float(input("angle speed : "))
 omega = np.repeat(5, N)
 
-fig, ax = plt.subplots()
-ax.set_xlim(-1.2, 1.2)
-ax.set_ylim(-1.2, 1.2)
-ax.set_xlabel('X')
-ax.set_ylabel('Y')
-#prazna linija
-oscillators, = ax.plot([], [], 'bo')
+fig, (ax_anim, ax_controls) = plt.subplots(1, 2, figsize=(12, 6), gridspec_kw={'width_ratios': [2, 1]})
 
+
+ax_anim.set_xlim(-1.2, 1.2)
+ax_anim.set_ylim(-1.2, 1.2)
+#ax_anim.axis('off')
+oscillators, = ax_anim.plot([], [], 'bo')
 
 def init():
     oscillators.set_data([], [])
@@ -54,6 +53,17 @@ def resetSimulation(event):
     global theta
     theta = np.random.uniform(0, 2*np.pi, N)
 
+ani_running = True
+def pauseSimulation(event):
+    global ani_running
+    if ani_running:
+        ani.event_source.stop()
+        buttonPause.label.set_text('Resume animation')
+    else:
+        ani.event_source.start()
+        buttonPause.label.set_text('Pause animation')
+    ani_running = not ani_running
+
 def updateK(val):
     global K 
     K = sliderK.val 
@@ -68,25 +78,36 @@ def updateN(val):
     theta = np.random.uniform(0, 2*np.pi, N)
     omega = np.repeat(sliderOmega.val, N)
 
+
+sliderN_ax = plt.axes([0.7, 0.8, 0.15, 0.03])
+sliderN = widgets.Slider(sliderN_ax, 'Number of oscillators', 1, 100, valinit=N, valstep=1)
+sliderN.on_changed(updateN)
+
+
+sliderK_ax = plt.axes([0.7, 0.7, 0.15, 0.03])
+sliderK = widgets.Slider(sliderK_ax, 'Strength of coupling', 0.1, 100.0, valinit=K)
+sliderK.on_changed(updateK)
+
+
+sliderOmega_ax = plt.axes([0.7, 0.6, 0.15, 0.03])
+sliderOmega = widgets.Slider(sliderOmega_ax, 'Angular speed', 0.1, 100.0, valinit=omega[0])
+sliderOmega.on_changed(updateOmega)
+
+
+buttonReset_ax = plt.axes([0.7, 0.4, 0.15, 0.1])
+buttonReset = widgets.Button(buttonReset_ax, 'Reset simulation', color='yellow')
+buttonReset.on_clicked(resetSimulation)
+
+buttonPause_ax = plt.axes([0.7, 0.2, 0.15, 0.1])
+buttonPause = widgets.Button(buttonPause_ax, 'Pause animation', color='red')
+buttonPause.on_clicked(pauseSimulation)
+
+ax_controls.axis('off')
+
+
 #check ???
 oscilators = init()
 ani = animation.FuncAnimation(fig, update, frames=int(timesteps/h), init_func=init, blit=True, interval=50)
 
-#treba podesiti ovo da vizuelno izgleda pristojno sad samo dodajem da radi 
-axes_reset = plt.axes([0.8, 0.025, 0.1, 0.04])
-bt_reset_sim = widgets.Button(axes_reset, 'Reset simulation', color='yellow')
-bt_reset_sim.on_clicked(resetSimulation)
-
-axes_K = plt.axes([0.8, 0.15, 0.1, 0.02])
-sliderK = widgets.Slider(axes_K, 'Strenght of coupling', 0.1, 100.0, valinit=K)
-sliderK.on_changed(updateK)
-
-axes_omega = plt.axes([0.8, 0.1, 0.1, 0.02])
-sliderOmega = widgets.Slider(axes_omega, 'Angular speed', 0.1, 100.0, valinit=omega[0])
-sliderOmega.on_changed(updateOmega)
-
-axes_N = plt.axes([0.8, 0.2, 0.1, 0.02])
-sliderN = widgets.Slider(axes_N, 'Number of oscillators', 1, 100, valinit=N, valstep=1)
-sliderN.on_changed(updateN)
 
 plt.show()
