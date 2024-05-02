@@ -17,7 +17,7 @@ def kuramoto(theta, K, omega):
 N = 10 # broj oscilatora
 timesteps = 1000 # vreme simulacije
 h = 0.001 # korak
-K = 100 # jacina uticaja medju oscilatorima
+K = 7 # jacina uticaja medju oscilatorima
 
 theta = np.random.uniform(0, 2*np.pi, N)
 # omega = np.random.uniform(0.5, 2, N)
@@ -52,6 +52,16 @@ def update(frame):
 def resetSimulation(event):
     global theta
     theta = np.random.uniform(0, 2*np.pi, N)
+
+def resetParameters(event):
+    global N, K, omega, theta
+    N = 10 
+    K = 7 
+    omega = np.repeat(5, N)
+    theta = np.random.uniform(0, 2*np.pi, N)
+    sliderK.set_val(K) 
+    sliderN.set_val(N)
+    sliderOmega.set_val(5)
 
 ani_running = True
 def pauseSimulation(event):
@@ -101,6 +111,10 @@ buttonReset.on_clicked(resetSimulation)
 buttonPause_ax = plt.axes([0.7, 0.2, 0.15, 0.1])
 buttonPause = widgets.Button(buttonPause_ax, 'Pause animation', color='red')
 buttonPause.on_clicked(pauseSimulation)
+
+buttonResetParams_ax = plt.axes([0.7, 0.0, 0.15, 0.1])
+buttonResetParams = widgets.Button(buttonResetParams_ax, "Reset parameters", color='blue')
+buttonResetParams.on_clicked(resetParameters)
 
 ax_controls.axis('off')
 
