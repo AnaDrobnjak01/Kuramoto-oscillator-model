@@ -26,9 +26,7 @@ omega = np.repeat(5, N)
 
 fig, (ax_anim, ax_controls) = plt.subplots(1, 2, figsize=(12, 6), gridspec_kw={'width_ratios': [2, 1]})
 fig_manager = plt.get_current_fig_manager()
-fig_manager.set_window_title('Kuramoto Oscillator Model')  # Set window title
-
-
+fig_manager.set_window_title("Kuramoto Oscillator Model") 
 
 ax_anim.set_xlim(-1.2, 1.2)
 ax_anim.set_ylim(-1.2, 1.2)
