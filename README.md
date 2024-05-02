@@ -19,5 +19,4 @@ $ cd Kuramoto-oscillator-model
 $ python3 kuramoto.py
 ```
 ## Authors 
-Ana Mihajlović
-Ana Drobnjak
+Ana Mihajlović, Ana Drobnjak
