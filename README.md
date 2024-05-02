@@ -4,9 +4,9 @@ More about Kuramoto model ![here](https://guava.physics.uiuc.edu/~nigel/courses/
 
 The animation shows movement of oscillators in respond to different parameter input.
 ## Prerequisites
-python3
-matplotlib
-numpy 
+* python3
+* matplotlib
+* numpy 
 
 ## Running simulation 
 ```
@@ -19,4 +19,5 @@ $ cd Kuramoto-oscillator-model
 $ python3 kuramoto.py
 ```
 ## Authors 
-Ana Mihajlović, Ana Drobnjak
+* Ana Mihajlović
+* Ana Drobnjak
